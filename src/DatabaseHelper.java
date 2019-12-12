@@ -22,9 +22,9 @@ public class DatabaseHelper {
 
     public DatabaseHelper(){
         getConnectionPref();
-        getConnectionStats();
+       // getConnectionStats();
         createPreferenceTable();
-        createStatsTable();
+        //createStatsTable();
     }
 
     public void getConnectionPref(){
@@ -132,10 +132,11 @@ public class DatabaseHelper {
             try{
                 Statement statement = connection_pref.createStatement();
                 ResultSet resultSet = statement.executeQuery(sqlSelect);
-                resultSet.next();
-                int dim = resultSet.getInt(DIMENSIONS);
-                int numBombs = resultSet.getInt(NUM_BOMBS);
-                p = new Preference(dim,numBombs);
+                while(resultSet.next()) {
+                    int dim = resultSet.getInt(DIMENSIONS);
+                    int numBombs = resultSet.getInt(NUM_BOMBS);
+                    p = new Preference(dim,numBombs);
+                }
             }catch (SQLException e){
                 e.printStackTrace();
             }
