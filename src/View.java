@@ -25,7 +25,7 @@ public class View extends JFrame {
     JLabel timer;
     JButton[][] boardButtons;
     Preference preference;
-   // Stats stats;
+    Stats stats;
     DatabaseHelper databaseHelper = new DatabaseHelper();
 
     JMenuItem menuItem1, menuItem2, menuItem3, menuItem4;
@@ -37,7 +37,7 @@ public class View extends JFrame {
         //dimension will be adjustable upon opening of the program
         setPreferredSize(new Dimension(800,800));
         preference = databaseHelper.getPreferences();
-       // stats = databaseHelper.getStats();
+        stats = databaseHelper.getStats();
         size = preference.dimensions;
         numBomb = preference.numBombs;
         setupUI();
@@ -249,22 +249,22 @@ public class View extends JFrame {
                     stats.setLayout(new GridLayout(4,2));
                     JLabel GP = new JLabel("Games Played: ");
                     stats.add(GP);
-                    JLabel gp = new JLabel(Integer.toString(View.this.numGames));
+                    JLabel gp = new JLabel(Integer.toString(View.this.stats.gamesPlayed));
                     stats.add(gp);
 
                     JLabel GW = new JLabel("Games Won: ");
                     stats.add(GW);
-                    JLabel gw = new JLabel(Integer.toString(View.this.numWon));
+                    JLabel gw = new JLabel(Integer.toString(View.this.stats.gamesWon));
                     stats.add(gw);
 
                     JLabel WP = new JLabel("Win Percentage: ");
                     stats.add(WP);
-                    JLabel wp = new JLabel(Double.toString(View.this.numPercent));
+                    JLabel wp = new JLabel(Double.toString(View.this.stats.winPercentage));
                     stats.add(wp);
 
                     JLabel FT = new JLabel("Fastest Time: ");
                     stats.add(FT);
-                    JLabel ft = new JLabel("999");
+                    JLabel ft = new JLabel(Integer.toString(View.this.stats.fastestTime));
                     stats.add(ft);
 
                     Panel.add(stats, BorderLayout.CENTER);

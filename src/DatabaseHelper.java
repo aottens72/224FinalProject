@@ -22,9 +22,9 @@ public class DatabaseHelper {
 
     public DatabaseHelper(){
         getConnectionPref();
-       // getConnectionStats();
+        getConnectionStats();
         createPreferenceTable();
-        //createStatsTable();
+        createStatsTable();
     }
 
     public void getConnectionPref(){
@@ -115,9 +115,9 @@ public class DatabaseHelper {
                 gamesWon + ", " +
                 winPercent + ", " +
                 fastestTime + ")";
-        if(connection_pref != null){
+        if(connection_stats != null){
             try{
-                Statement statement = connection_pref.createStatement();
+                Statement statement = connection_stats.createStatement();
                 statement.execute(SQLInsert);
             }catch(SQLException e){
                 e.printStackTrace();
@@ -151,12 +151,13 @@ public class DatabaseHelper {
             try{
                 Statement statement = connection_stats.createStatement();
                 ResultSet resultSet = statement.executeQuery(sqlSelect);
-                resultSet.next();
-                int gamesPlayed = resultSet.getInt(GAMES_PLAYED);
-                int gamesWon = resultSet.getInt(GAMES_WON);
-                double winPercentage = resultSet.getDouble(WIN_PERCENTAGE);
-                int fastestTime = resultSet.getInt(FASTEST_TIME);
-                s = new Stats(gamesPlayed, gamesWon, winPercentage, fastestTime);
+                while(resultSet.next()) {
+                    int gamesPlayed = resultSet.getInt(GAMES_PLAYED);
+                    int gamesWon = resultSet.getInt(GAMES_WON);
+                    double winPercentage = resultSet.getDouble(WIN_PERCENTAGE);
+                    int fastestTime = resultSet.getInt(FASTEST_TIME);
+                    s = new Stats(gamesPlayed, gamesWon, winPercentage, fastestTime);
+                }
             }catch (SQLException e){
                 e.printStackTrace();
             }

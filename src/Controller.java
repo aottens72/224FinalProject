@@ -142,6 +142,12 @@ public class Controller {
         //update stats
         //still needs to be formatted correctly
         view.winPercentage.setText(" " + String.format("%.2f", (view.numWon/(double) view.numGames)*100) + "%");
+        Stats stats = databaseHelper.getStats();
+        stats.gamesPlayed += view.numGames;
+        stats.gamesWon += view.numWon;
+        stats.winPercentage = ((view.numWon/(double) view.numGames)*100);
+        databaseHelper.updateStats(1, stats.gamesPlayed, stats.gamesWon, stats.winPercentage, stats.fastestTime);
+
 
         // makes bomb sound
         try {
@@ -181,7 +187,7 @@ public class Controller {
         view.timer.setText("0");
         num_clicks = 0;
         time = 0;
-        view.repaint();
+        view = new View();
         return;
     }
 
@@ -307,6 +313,14 @@ public class Controller {
             view.numWon++;
             view.gamesWon.setText(" " + view.numWon);
             view.winPercentage.setText(" " + String.format("%.2f", (view.numWon/(double) view.numGames)*100) + "%");
+            Stats stats = databaseHelper.getStats();
+            stats.gamesPlayed += view.numGames;
+            stats.gamesWon += view.numWon;
+            stats.winPercentage = ((view.numWon/(double) view.numGames)*100);
+            if(time < stats.fastestTime){
+                stats.fastestTime = time;
+            }
+            databaseHelper.updateStats(1, stats.gamesPlayed, stats.gamesWon, stats.winPercentage, stats.fastestTime);
             int choice = JOptionPane.showConfirmDialog(view, "You won! Do you" +
                     " want to play again?", "Play Again?", JOptionPane.YES_NO_OPTION);
             if (choice == JOptionPane.NO_OPTION) {
