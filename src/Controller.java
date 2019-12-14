@@ -145,7 +145,7 @@ public class Controller {
         Stats stats = databaseHelper.getStats();
         stats.gamesPlayed += view.numGames;
         stats.gamesWon += view.numWon;
-        stats.winPercentage = ((view.numWon/(double) view.numGames)*100);
+        stats.winPercentage = ((stats.gamesWon/(double) stats.gamesPlayed)*100);
         databaseHelper.updateStats(1, stats.gamesPlayed, stats.gamesWon, stats.winPercentage, stats.fastestTime);
 
 
@@ -316,7 +316,7 @@ public class Controller {
             Stats stats = databaseHelper.getStats();
             stats.gamesPlayed += view.numGames;
             stats.gamesWon += view.numWon;
-            stats.winPercentage = ((view.numWon/(double) view.numGames)*100);
+            stats.winPercentage = ((stats.gamesWon/(double) stats.gamesPlayed)*100);
             if(time < stats.fastestTime){
                 stats.fastestTime = time;
             }
