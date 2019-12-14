@@ -187,7 +187,7 @@ public class Controller {
         view.timer.setText("0");
         num_clicks = 0;
         time = 0;
-        view = new View();
+        view.repaint();
         return;
     }
 
